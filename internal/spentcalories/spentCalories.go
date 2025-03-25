@@ -114,7 +114,7 @@ const (
 //
 // Параметры:
 //
-// steps int - количество шагов.
+// steps int - количество шагов
 // weight float64 — вес пользователя.
 // duration time.Duration — длительность тренировки.
 func RunningSpentCalories(steps int, weight float64, duration time.Duration) float64 {

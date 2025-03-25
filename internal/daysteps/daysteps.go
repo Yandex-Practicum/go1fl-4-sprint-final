@@ -36,7 +36,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 // Если время пакета относится к новым суткам, storage предварительно
 // очищается.
 // Если пакет валидный, он добавляется в слайс storage, который возвращает
-// функция. Если пакет невалидный, storage возвращается без изменений.
+// функция. Если пакет невалидный, storage возвращается без изменений
 func DayActionInfo(data string, weight, height float64) string {
 	// ваш код ниже
 	steps, duration, err := parsePackage(data)
