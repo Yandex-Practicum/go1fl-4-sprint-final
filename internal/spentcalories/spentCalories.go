@@ -118,11 +118,11 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 //
 // data string - строка с данными.
 // weight, height float64 — вес и рост пользователя.
-func TrainingInfo(data string, weight, height float64) (string, error) {
+func TrainingInfo(data string, weight, height float64) string {
 	var strInfo string
 	steps, activity, duration, err := parseTraining(data)
 	if err != nil {
-		return "", fmt.Errorf("parse training data failed: %w", err)
+		return ""
 	}
 
 	switch activity {
