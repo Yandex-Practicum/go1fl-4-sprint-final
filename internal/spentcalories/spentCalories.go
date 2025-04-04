@@ -31,7 +31,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	}
 	step, err := strconv.Atoi(strData[0])
 	if err != nil {
-		return 0, "0", period, fmt.Errorf("[parseTraining] неверный формат количества шагов: %s", strData[0])
+		return 0, "", 0, fmt.Errorf("[parseTraining] неверный формат количества шагов %s: %w", strData[0], err)
 	}
 	if len(strData) != 3 {
 		return 0, "0", period, fmt.Errorf("[parseTraining] неверный формат строки данных")
@@ -118,12 +118,13 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 //
 // data string - строка с данными.
 // weight, height float64 — вес и рост пользователя.
-func TrainingInfo(data string, weight, height float64) string {
+func TrainingInfo(data string, weight, height float64) (string, error) {
 	var strInfo string
 	steps, activity, duration, err := parseTraining(data)
 	if err != nil {
-		fmt.Println("[TrainingInfo(string, float64, float63)]", err)
+		return "", fmt.Errorf("parse training data failed: %w", err)
 	}
+
 	switch activity {
 	case "Ходьба":
 		dist := distance(steps)

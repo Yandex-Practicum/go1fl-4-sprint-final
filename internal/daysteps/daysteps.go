@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const unit = 1000
+
 var (
 	StepLength = 0.65 // длина шага в метрах
 )
@@ -26,7 +28,8 @@ func parsePackage(data string) (int, time.Duration, error) {
 	}
 	step, err := strconv.Atoi(strData[0])
 	if err != nil {
-		return 0, 0, fmt.Errorf("[parsePackage(data string)] неверный формат количества шагов: %s", strData[0])
+		return 0, 0, fmt.Errorf("[parsePackage(data string)] неверный формат количества "+
+			"шагов: %s: %w", strData[0], err)
 	}
 	if step < 1 {
 		return 0, 0, fmt.Errorf("[parsePackage(data string)] 0 шагов")
@@ -58,7 +61,7 @@ func DayActionInfo(data string, weight, height float64) string {
 		fmt.Println("[DayActionInfo(string, float 64, float64)] количество шагов 0")
 		return ""
 	}
-	distance := float64(StepLength) * float64(step) / 1000
+	distance := float64(StepLength) * float64(step) / unit
 	kalories := spentcalories.WalkingSpentCalories(step, weight, height, period)
 	strInfo := fmt.Sprintf("Количество шагов %d.\n Дистанция составила %.2fкм\n Вы сожгли %.2f ккал.", step, distance, kalories)
 	return strInfo
