@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/Yandex-Practicum/tracker/internal/daysteps"
-	"github.com/Yandex-Practicum/tracker/internal/spentcalories"
+	"go1fl-4-sprint-final-beh/internal/daysteps"
+	"go1fl-4-sprint-final-beh/internal/spentcalories"
 )
 
 func main() {
