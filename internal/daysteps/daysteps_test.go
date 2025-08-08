@@ -240,6 +240,14 @@ func (suite *DayStepsTestSuite) TestDayActionInfo() {
 		wantLogOutput bool
 	}{
 		{
+            name:          "ошибка расчета калорий",
+            input:         "1000,1h00m",
+            weight:        -75.0, // невалидный вес
+            height:        1.75,
+            want:          "",
+            wantLogOutput: true,
+        },
+		{
 			name:          "нормальная нагрузка - один час",
 			input:         "6000,1h00m",
 			weight:        75.0,

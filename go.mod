@@ -1,6 +1,6 @@
-module github.com/Yandex-Practicum/tracker
+module github.com/Sergey-81/Fitness-tracker-module
 
-go 1.24.1
+go 1.24.4
 
 require github.com/stretchr/testify v1.10.0
 

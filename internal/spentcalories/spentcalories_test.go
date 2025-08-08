@@ -680,6 +680,14 @@ func (suite *SpentCaloriesTestSuite) TestTrainingInfo() {
 			want:    "",
 			wantErr: true,
 		},
+		{
+    		name:    "ошибка расчета калорий при ходьбе",
+   			input:   "6000,Ходьба,1h00m",
+    		weight:  -75.0, // невалидный вес
+    		height:  1.75,
+    		want:    "",
+    		wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
