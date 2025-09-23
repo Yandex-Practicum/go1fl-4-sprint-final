@@ -23,13 +23,13 @@ func parsePackage(data string) (int, time.Duration, error) {
 		return 0, 0, fmt.Errorf("parsePackage: expected 2 fields (steps,duration), got %d", len(parts))
 	}
 
-	stepsStr := parts[0]
+	stepsStr := strings.TrimSpace(parts[0])
 	steps, err := strconv.Atoi(stepsStr)
 	if err != nil || steps <= 0 {
 		return 0, 0, fmt.Errorf("parsePackage: invalid steps %q", stepsStr)
 	}
 
-	durStr := parts[1]
+	durStr := strings.TrimSpace(parts[1])
 	dur, err := time.ParseDuration(durStr)
 	if err != nil || dur <= 0 {
 		return 0, 0, fmt.Errorf("parsePackage: invalid duration %q", durStr)
@@ -44,15 +44,9 @@ func DayActionInfo(data string, weight, height float64) string {
 		log.Println(err)
 		return ""
 	}
-	if steps <= 0 {
-		log.Println("steps must be > 0")
-		return ""
-	}
 
-	// Дистанция в км: шаги * длина шага (м) / метров в км
 	distKm := (float64(steps) * stepLength) / float64(mInKm)
 
-	// Калории по модели из пакета spentcalories
 	cals, err := spentcalories.WalkingSpentCalories(steps, weight, height, dur)
 	if err != nil {
 		log.Println(err)
@@ -60,7 +54,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	}
 
 	return fmt.Sprintf(
-		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
+		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.",
 		steps, distKm, cals,
 	)
 }
