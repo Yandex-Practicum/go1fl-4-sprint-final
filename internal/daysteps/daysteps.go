@@ -23,13 +23,13 @@ func parsePackage(data string) (int, time.Duration, error) {
 		return 0, 0, fmt.Errorf("parsePackage: expected 2 fields (steps,duration), got %d", len(parts))
 	}
 
-	stepsStr := strings.TrimSpace(parts[0])
+	stepsStr := parts[0]
 	steps, err := strconv.Atoi(stepsStr)
 	if err != nil || steps <= 0 {
 		return 0, 0, fmt.Errorf("parsePackage: invalid steps %q", stepsStr)
 	}
 
-	durStr := strings.TrimSpace(parts[1])
+	durStr := parts[1]
 	dur, err := time.ParseDuration(durStr)
 	if err != nil || dur <= 0 {
 		return 0, 0, fmt.Errorf("parsePackage: invalid duration %q", durStr)
@@ -37,7 +37,6 @@ func parsePackage(data string) (int, time.Duration, error) {
 
 	return steps, dur, nil
 }
-
 func DayActionInfo(data string, weight, height float64) string {
 	steps, dur, err := parsePackage(data)
 	if err != nil {
@@ -54,7 +53,7 @@ func DayActionInfo(data string, weight, height float64) string {
 	}
 
 	return fmt.Sprintf(
-		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.",
+		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
 		steps, distKm, cals,
 	)
 }
