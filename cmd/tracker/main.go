@@ -22,7 +22,6 @@ func main() {
 		"12:40:00, 3456",
 		"something is wrong",
 	}
-
 	fmt.Println("Активность в течение дня")
 
 	var (
