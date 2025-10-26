@@ -54,12 +54,12 @@ func DayActionInfo(data string, weight, height float64) (string, error) {
 
     distance := (float64(steps) * stepLength) / mInKm
 
-    calBurned, err := spentcalories.RunningSpentCalories(steps, weight, height, duration)
+    calBurned, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
     if err != nil {
         log.Printf("failed to calculate spent calories: %v", err)
         return "", nil
     }
 
-    report := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", steps, distance, calBurned/2,)
+    report := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", steps, distance, calBurned)
     return report, nil
 }
