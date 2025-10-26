@@ -31,7 +31,7 @@ func main() {
 	)
 
 	for _, v := range input {
-		dayActionsInfo = daysteps.DayActionInfo(v, weight, height)
+		dayActionsInfo, _ = daysteps.DayActionInfo(v, weight, height)
 		dayActionsLog = append(dayActionsLog, dayActionsInfo)
 	}
 
