@@ -103,4 +103,4 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 	calories *= walkingCaloriesCoefficient
 
 	return calories, nil
-}
+} 
