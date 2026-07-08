@@ -26,16 +26,22 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", 0, fmt.Errorf("неверный формат данных")
 	}
 
-	// 3. Преобразуем первый элемент  в тип int
+	// 3. Шаги
 	steps, err := strconv.Atoi(parts[0])
-	if err != nil { // Если возникла ошибка, возвращаем нули, пустую строку и саму ошибку
+	if err != nil {
 		return 0, "", 0, err
 	}
+	if steps <= 0 { // Проверка шагов 👣
+		return 0, "", 0, fmt.Errorf("количество шагов должно быть положительным")
+	}
 
-	// 4. Преобразуем третий элемент в time.Duration
+	// 4. Время
 	duration, err := time.ParseDuration(parts[2])
-	if err != nil { // Если возникла ошибка, снова возвращаем нули и ошибку
+	if err != nil {
 		return 0, "", 0, err
+	}
+	if duration <= 0 { // Проверка времени ⏳
+		return 0, "", 0, fmt.Errorf("продолжительность должна быть положительной")
 	}
 
 	// 5. Если всё прошло без ошибок, возвращаем шаги, вид активности, время и nil
@@ -98,7 +104,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	}
 
 	// 4. Формируем отчет и возвращаем его
-	return fmt.Sprintf("Тип тренировки: %s \nДлительность: %.2f ч. \nДистанция: %.2f км. \nСкорость: %.2f км/ч \nСожгли калорий: %.2f \n", activityType, duration.Hours(), dist, speed, calories), nil
+	return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", activityType, duration.Hours(), dist, speed, calories), nil
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
