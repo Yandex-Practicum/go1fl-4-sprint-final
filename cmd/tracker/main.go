@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/Yandex-Practicum/tracker/internal/daysteps"
 	"github.com/Yandex-Practicum/tracker/internal/spentcalories"
@@ -50,13 +49,17 @@ func main() {
 		"15392,Бег,0h45m",
 	}
 
-	var trainingLog []string
+	var (
+		trainingInfo string
+		trainingLog  []string
+		err          error
+	)
 
 	for _, v := range trainings {
-		trainingInfo, err := spentcalories.TrainingInfo(v, weight, height)
+		trainingInfo, err = spentcalories.TrainingInfo(v, weight, height)
 		if err != nil {
-			log.Printf("не получилось получить информацию о тренировке: %v", err)
-			continue
+			// чтобы журнал не ломался, сохраняем текст ошибки (как строку)
+			trainingInfo = err.Error()
 		}
 		trainingLog = append(trainingLog, trainingInfo)
 	}
