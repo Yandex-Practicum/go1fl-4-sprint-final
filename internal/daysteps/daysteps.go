@@ -17,6 +17,7 @@ const (
 )
 
 func parsePackage(data string) (int, time.Duration, error) {
+
 	sliceString := strings.Split(data, ",")
 	if len(sliceString) != 2 {
 		return 0, 0, fmt.Errorf("неверный формат строки: ожидается 2 части, найдено %d", len(sliceString))
@@ -62,4 +63,5 @@ func DayActionInfo(data string, weight, height float64) string {
 		return "" // Или обрабатываем ошибку как нужно по заданию
 	}
 	return fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", step, distance, dayCalories)
+
 }

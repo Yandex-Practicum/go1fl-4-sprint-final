@@ -1,9 +1,12 @@
 package spentcalories
 
 import (
+<<<<<<< HEAD
 	"fmt"
 	"strconv"
 	"strings"
+=======
+>>>>>>> e8248fd40f08a81d2b20cd29d72cc5b413cbaa61
 	"time"
 )
 
@@ -41,9 +44,11 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 
 func distance(steps int, height float64) float64 {
 	// TODO: реализовать функцию
+
 	stepLength := height * stepLengthCoefficient
 	totalMeters := float64(steps) * stepLength
 	return totalMeters / mInKm
+
 }
 
 func meanSpeed(steps int, height float64, duration time.Duration) float64 {
@@ -63,7 +68,6 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 }
 
 func TrainingInfo(data string, weight, height float64) (string, error) {
-	// TODO: реализовать функцию
 	var calories float64
 	var calErr error
 	steps, activity, duration, err := parseTraining(data)
@@ -96,10 +100,12 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 		calories,                // %.2f
 	)
 	return report, nil
+
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	// TODO: реализовать функцию
+
 	if steps <= 0 || duration <= 0 || weight <= 0 || height <= 0 {
 		return 0, fmt.Errorf("Неправильные данные")
 	}
@@ -107,10 +113,12 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 	durationInMinutes := float64(duration) / float64(time.Minute)
 	cal := (weight * speed * durationInMinutes) / minInH
 	return cal, nil
+
 }
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	// TODO: реализовать функцию
+
 	if steps <= 0 || duration <= 0 || weight <= 0 || height <= 0 {
 		return 0, fmt.Errorf("Неправильные данные")
 	}
@@ -118,4 +126,5 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 	durationInMin := float64(duration) / float64(time.Minute)
 	cal := ((durationInMin * weight * speed) / float64(minInH)) * walkingCaloriesCoefficient
 	return cal, nil
+
 }
