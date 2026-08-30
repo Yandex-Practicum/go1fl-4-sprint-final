@@ -1,12 +1,9 @@
 package spentcalories
 
 import (
-<<<<<<< HEAD
 	"fmt"
 	"strconv"
 	"strings"
-=======
->>>>>>> e8248fd40f08a81d2b20cd29d72cc5b413cbaa61
 	"time"
 )
 
