@@ -17,7 +17,6 @@ const (
 )
 
 func parsePackage(data string) (int, time.Duration, error) {
-
 	sliceString := strings.Split(data, ",")
 	if len(sliceString) != 2 {
 		return 0, 0, fmt.Errorf("неверный формат строки: ожидается 2 части, найдено %d", len(sliceString))
@@ -27,26 +26,21 @@ func parsePackage(data string) (int, time.Duration, error) {
 		return 0, 0, fmt.Errorf("неверный формат строки %s", sliceString[0])
 	}
 	if step <= 0 {
-		return 0, 0, fmt.Errorf("Количество шагов %s ошибка", sliceString[0]) //1
+		return 0, 0, fmt.Errorf("количество шагов %s ошибка", sliceString[0]) //1
 	}
 	duration, err := time.ParseDuration(sliceString[1])
-	if duration >= 24*time.Hour || duration <= 0 {
+	if err != nil {
 		return 0, 0, fmt.Errorf("ошибка времени")
 	}
-
-	if err != nil {
+	if duration >= 24*time.Hour || duration <= 0 {
 		return 0, 0, fmt.Errorf("ошибка времени")
 	}
 	return step, duration, nil
 }
-
-// TODO: реализовать функцию
-
 func DayActionInfo(data string, weight, height float64) string {
-	// TODO: реализовать функцию
 	step, duration, err := parsePackage(data)
 	if err != nil {
-		fmt.Println("Ошибка:", err)
+		fmt.Println("ошибка:", err)
 		return ""
 	}
 	if step <= 0 { //1
@@ -59,11 +53,8 @@ func DayActionInfo(data string, weight, height float64) string {
 	distance := durationStep / mInKm
 	dayCalories, ok := spentcalories.WalkingSpentCalories(step, weight, height, duration)
 	if ok != nil {
-		fmt.Println("Ошибка расчета калорий:", err)
-
-		return "" // Или обрабатываем ошибку как нужно по заданию
+		fmt.Println("ошибка расчета калорий:", ok)
+		return ""
 	}
-	// gfhf
 	return fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", step, distance, dayCalories)
-
 }

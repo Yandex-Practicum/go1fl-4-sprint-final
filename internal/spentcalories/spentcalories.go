@@ -22,34 +22,28 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 	if len(sliceString) != 3 {
 		return 0, " ", 0, fmt.Errorf("неверный формат строки: ожидается 2 части, найдено %d", len(sliceString))
 	}
-	step, ok := strconv.Atoi(sliceString[0])
-	if ok != nil {
+	step, err := strconv.Atoi(sliceString[0])
+	if err != nil {
 		return 0, " ", 0, fmt.Errorf("неверный формат строки %s", sliceString[0])
 	}
 	if step <= 0 {
 		return 0, " ", 0, fmt.Errorf("Количество шагов %s ошибка", sliceString[0])
 	}
-	duration, err := time.ParseDuration(sliceString[2])
-	if err != nil {
-		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", err)
+	duration, ok := time.ParseDuration(sliceString[2])
+	if ok != nil {
+		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", ok)
 	}
 	if duration <= 0 {
-		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", err)
+		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", ok)
 	}
 	return step, sliceString[1], duration, nil
 }
-
 func distance(steps int, height float64) float64 {
-	// TODO: реализовать функцию
-
 	stepLength := height * stepLengthCoefficient
 	totalMeters := float64(steps) * stepLength
 	return totalMeters / mInKm
-
 }
-
 func meanSpeed(steps int, height float64, duration time.Duration) float64 {
-	// TODO: реализовать функцию
 	if duration <= 0 {
 		return 0
 	}
@@ -60,7 +54,7 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 		return 0
 	}
 	distKm := distance(steps, height)
-	hours := float64(duration) / float64(time.Hour)
+	hours := duration.Hours()
 	return distKm / hours
 }
 
@@ -74,9 +68,9 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	speed := meanSpeed(steps, height, duration)
 	switch activity {
 	case "Бег":
-		calories, calErr = RunningSpentCalories(steps, weight, height, duration)
+		calories, err = RunningSpentCalories(steps, weight, height, duration)
 	case "Ходьба":
-		calories, calErr = WalkingSpentCalories(steps, weight, height, duration)
+		calories, err = WalkingSpentCalories(steps, weight, height, duration)
 	default:
 		return "", fmt.Errorf("неизвестный тип тренировки: %s", activity)
 	}
@@ -101,10 +95,17 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
-
-	if steps <= 0 || duration <= 0 || weight <= 0 || height <= 0 {
-		return 0, fmt.Errorf("Неправильные данные")
+	if steps <= 0 {
+		return 0, fmt.Errorf("неправильные данные шагов")
+	}
+	if duration <= 0 {
+		return 0, fmt.Errorf("неправильные данные времени")
+	}
+	if weight <= 0 {
+		return 0, fmt.Errorf("неправильные данные веса")
+	}
+	if height <= 0 {
+		return 0, fmt.Errorf("неправильные данные роста")
 	}
 	speed := float64(meanSpeed(steps, height, duration))
 	durationInMinutes := float64(duration) / float64(time.Minute)
@@ -112,17 +113,21 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 	return cal, nil
 
 }
-
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
-
-	if steps <= 0 || duration <= 0 || weight <= 0 || height <= 0 {
-		return 0, fmt.Errorf("Неправильные данные")
+	if steps <= 0 {
+		return 0, fmt.Errorf("неправильные данные шагов")
+	}
+	if duration <= 0 {
+		return 0, fmt.Errorf("неправильные данные времени")
+	}
+	if weight <= 0 {
+		return 0, fmt.Errorf("неправильные данные веса")
+	}
+	if height <= 0 {
+		return 0, fmt.Errorf("неправильные данные роста")
 	}
 	speed := float64(meanSpeed(steps, height, duration))
 	durationInMin := float64(duration) / float64(time.Minute)
-	cal := ((durationInMin * weight * speed) / float64(minInH)) * walkingCaloriesCoefficient
-	//hkhk
+	cal := ((durationInMin * weight * speed) / minInH) * walkingCaloriesCoefficient
 	return cal, nil
-
 }
