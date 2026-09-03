@@ -60,7 +60,7 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 
 func TrainingInfo(data string, weight, height float64) (string, error) {
 	var calories float64
-	var calErr error
+	var err error
 	steps, activity, duration, err := parseTraining(data)
 	if err != nil {
 		return "", err
@@ -74,8 +74,8 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	default:
 		return "", fmt.Errorf("неизвестный тип тренировки: %s", activity)
 	}
-	if calErr != nil {
-		return "", calErr
+	if err != nil {
+		return "", err
 	}
 	hours := float64(duration) / float64(time.Hour)
 	report := fmt.Sprintf(
