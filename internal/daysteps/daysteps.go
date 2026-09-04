@@ -21,9 +21,9 @@ func parsePackage(data string) (int, time.Duration, error) {
 	if len(sliceString) != 2 {
 		return 0, 0, fmt.Errorf("неверный формат строки: ожидается 2 части, найдено %d", len(sliceString))
 	}
-	step, ok := strconv.Atoi(sliceString[0])
-	if ok != nil {
-		return 0, 0, fmt.Errorf("неверный формат строки %s", sliceString[0])
+	step, err := strconv.Atoi(sliceString[0])
+	if err != nil {
+		return 0, 0, fmt.Errorf("неверный формат строки %s %w", sliceString[0], err)
 	}
 	if step <= 0 {
 		return 0, 0, fmt.Errorf("количество шагов %s ошибка", sliceString[0]) //1

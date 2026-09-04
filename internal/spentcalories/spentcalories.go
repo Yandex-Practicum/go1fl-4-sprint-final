@@ -34,7 +34,7 @@ func parseTraining(data string) (int, string, time.Duration, error) {
 		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", ok)
 	}
 	if duration <= 0 {
-		return 0, "", 0, fmt.Errorf("неверный формат времени: %w", ok)
+		return 0, "", 0, fmt.Errorf("неверный формат времени:")
 	}
 	return step, sliceString[1], duration, nil
 }
